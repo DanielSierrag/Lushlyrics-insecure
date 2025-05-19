@@ -24,10 +24,6 @@ Pipfile.lock
 .env
 .env.*
 
-# Migrations
-*/migrations/
-!*/migrations/__init__.py
-
 # OS
 .DS_Store
 Thumbs.db
