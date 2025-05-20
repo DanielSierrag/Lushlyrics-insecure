@@ -7,6 +7,10 @@ name = "pypi"
 django = "==5.1.6"
 spotipy = "==2.16.1"
 youtube-search = "==1.1.1"
+django-allauth = "*"
+requests = "*"
+pyjwt = "*"
+cryptography = "*"
 
 [dev-packages]
 
