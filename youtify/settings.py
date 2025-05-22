@@ -39,10 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'youtyfy_auth.apps.YoutyfyAuthConfig',
     'main',
+
+    # auth apps
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'two_factor',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +59,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Auth middlewares
     'allauth.account.middleware.AccountMiddleware',
+    'django_otp.middleware.OTPMiddleware'
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -110,8 +119,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Custom user model
 AUTH_USER_MODEL = 'youtyfy_auth.User'
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+# Auth conf
+LOGIN_REDIRECT_URL = 'two:factor:profile'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'two_factor:login'
 
 SITE_ID = 1
 
@@ -149,3 +160,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+#  two factor settings
+LOGIN_URL = 'two_factor:login'
