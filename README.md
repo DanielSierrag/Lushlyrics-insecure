@@ -1,33 +1,51 @@
+## Lushlyrics-insecure
 
+This project is a fork of [https://github.com/mohammedwed/Lushlyrics-insecure](https://github.com/mohammedwed/Lushlyrics-insecure).
 
+## Explanation
+
+This fork extends the original project by adding authentication features, including:
+
+- **User login:** Secure authentication for users.
+- **Email verification:** Users must verify their email address before accessing certain features.
+- **Two-factor authentication (2FA):** An additional layer of security requiring a second verification step during login.
 
 ## Setup
 
-The first thing to do is to clone the repository:
+To run this project, follow these steps:
 
-```sh
-$ git clone https://github.com/mohammedwed/lushlyrics-webapp-django.git
-$ cd lushlyrics-webapp-django
-```
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/your-username/Lushlyrics-insecure.git
+    cd Lushlyrics-insecure
+    ```
 
-Create a virtual environment to install dependencies in and activate it:
+2. **Create and activate a virtual environment:**
+    ```sh
+    python -m venv env
+    # On Windows
+    env\Scripts\activate
+    # On macOS/Linux
+    source env/bin/activate
+    ```
 
-```sh
-$ virtualenv2 --no-site-packages env
-$ source env/bin/activate
-```
+3. **Install dependencies:**
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-Then install the dependencies:
+4. **Apply migrations:**
+    ```sh
+    python manage.py migrate
+    ```
 
-```sh
-(env)$ pip install -r requirements.txt
-```
-Note the `(env)` in front of the prompt. This indicates that this terminal
-session operates in a virtual environment set up by `virtualenv2`.
+5. **Run the development server:**
+    ```sh
+    python manage.py runserver
+    ```
 
-Once `pip` has finished downloading the dependencies:
-```sh
-(env)$ cd spotify-clone-django
-(env)$ python manage.py runserver
-```
-And navigate to `http://127.0.0.1:8000/demo`.
+6. **Access the app:**
+
+    Open your browser and go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+
+---
