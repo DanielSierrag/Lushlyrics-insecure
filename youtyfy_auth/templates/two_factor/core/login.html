@@ -1,0 +1,43 @@
+{% extends "two_factor/_base.html" %}
+{% load i18n %}
+
+{% block title %}Two-Factor Authentication{% endblock title %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Log In</h2>
+                <p class="text-center text-muted mb-4">Enter your credentials to continue</p>
+                <form action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {% include "two_factor/_wizard_forms.html" %}
+                    <button type="submit" class="btn btn-primary w-100 mt-2">Submit</button>
+                </form>
+                <div class="text-center my-3">
+                    <span class="text-muted">or</span>
+                </div>
+                <a href="{% url 'google_login' %}" class="btn btn-outline-danger w-100 mb-2">
+                    <i class="fab fa-google"></i> Log In with Google
+                </a>
+                <div class="text-center mt-3">
+                    <span class="text-muted">Don't have an account?</span>
+                    <a href="/accounts/signup">Sign Up Here</a>
+                </div>
+                {% if backup_tokens %}
+                <hr>
+                <div class="backup_tokens_form text-center">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <p>{% trans "As a last resort, you can use a backup token:" %}</p>
+                        <button name="wizard_goto_step" type="submit" value="backup"
+                            class="btn btn-secondary btn-sm w-100">{% trans "Use Backup Token" %}</button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

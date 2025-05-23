@@ -1,0 +1,27 @@
+{% extends "two_factor/_base.html" %}
+{% load two_factor_tags %}
+{% load i18n %}
+
+{% block title %}Disable Two Factor Authentication{% endblock title %}
+
+{% block content %}
+<div class="card mx-auto mt-5" style="max-width: 400px;">
+    <div class="card-body">
+        <h3 class="card-title text-center mb-4">{% trans "Disable Two-Factor Authentication" %}</h3>
+        <p class="alert alert-warning text-center">
+            {% blocktrans trimmed %}
+                You are about to disable two-factor authentication. This weakens your account security, are you sure?
+            {% endblocktrans %}
+        </p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.as_p }}
+            </div>
+            <button class="btn btn-danger w-100" type="submit">
+                {% trans "Disable" %}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

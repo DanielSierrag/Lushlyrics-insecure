@@ -1,0 +1,42 @@
+{% extends "two_factor/_base.html" %}
+{% load two_factor_tags %}
+
+{% block title %}User Profile{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mx-auto" style="max-width: 400px;">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h2 class="card-title mb-4">User Profile</h2>
+                <a href="/" class="">Go to the Player</a>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email:</label>
+                <span>{{ user.email }}</span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Two-Factor Authentication:</label>
+                {% if request.user.is_verified %}
+                <span class="text-success">Enabled</span>
+                {% else %}
+                <span class="text-danger">Disabled</span>
+                {% endif %}
+            </div>
+            {% if not request.user.is_verified %}
+            <a class="btn btn-primary" href="{% url 'two_factor:setup' %}">Enable 2FA</a>
+            {% else %}
+            <div class="btn-group d-flex justify-content-center">
+                <a class="col-3 btn btn-primary" href="{% url 'two_factor:disable' %}">Disable 2FA</a>
+                <a class="col-3 btn btn-secondary" href="{% url 'two_factor:backup_tokens' %}">Back-up Tokens</a>
+            </div>
+            {% endif %}
+            <hr>
+            <form method="post" action="{% url 'account_logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger w-100 mt-2">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

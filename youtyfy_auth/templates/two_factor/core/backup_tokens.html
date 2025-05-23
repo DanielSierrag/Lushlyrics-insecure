@@ -1,0 +1,51 @@
+{% extends "two_factor/_base.html" %}
+{% load i18n %}
+
+{% block title %}Backup Tokens{% endblock title %}
+
+{% block content %}
+<div class="card my-4 shadow-sm">
+    <div class="card-body">
+        <h2 class="card-title mb-3">{% trans "Backup Tokens" %}</h2>
+        <p class="card-text">
+            {% blocktrans trimmed %}
+                Backup tokens can be used when your primary and backup
+                phone numbers aren't available. The backup tokens below can be used
+                for login verification. If you've used up all your backup tokens, you
+                can generate a new set of backup tokens. Only the backup tokens shown
+                below will be valid.
+            {% endblocktrans %}
+        </p>
+
+        {% if device.token_set.count %}
+            <ul class="list-group mb-3">
+                {% for token in device.token_set.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="font-monospace">{{ token.token }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="alert alert-info" role="alert">
+                {% blocktrans %}Print these tokens and keep them somewhere safe.{% endblocktrans %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                {% trans "You don't have any backup codes yet." %}
+            </div>
+        {% endif %}
+
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'profile' %}" class="btn btn-link">
+                    {% trans "Back to Account Security" %}
+                </a>
+                <button class="btn btn-primary" type="submit">
+                    {% trans "Generate Tokens" %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

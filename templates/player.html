@@ -105,9 +105,8 @@
         </div>
 
 
-        <form class="profile-container" action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="profile">
+        <a class="profile-container" href="{% url 'profile' %}">
+            <button class="profile">
                 <div class="profile-pic">
                     <svg width="16" height="16" fill="white" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg"
                         data-testid="user-icon">
@@ -117,9 +116,11 @@
                     </svg>
                 </div>
                 <span class='username hide-onhover'>{{ request.user }}</span>
-                <span class='logout username'>Logout</span>
+                <span class='logout username'>Profile</span>
             </button>
-        </form>
+
+
+        </a>
     </div>
 
 

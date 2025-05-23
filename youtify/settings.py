@@ -121,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'youtyfy_auth.User'
 
 # Auth conf
-LOGIN_REDIRECT_URL = 'two:factor:profile'
+LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'two_factor:login'
 
 SITE_ID = 1

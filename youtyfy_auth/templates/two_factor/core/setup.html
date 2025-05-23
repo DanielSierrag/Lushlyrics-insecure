@@ -1,0 +1,51 @@
+{% extends "two_factor/_base.html" %}
+{% load two_factor_tags %}
+{% load i18n %}
+
+
+
+{% block title %}Setup 2FA{% endblock title %}
+
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 420px; padding: 10px; margin: 10px;">
+    <div class="card-body">
+        <h2 class="card-title text-center mb-4">{% trans "Two-Factor Authentication Setup" %}</h2>
+        <p class="text-muted text-center mb-4">
+            {% trans "Enhance your account security by enabling two-factor authentication (2FA)." %}
+        </p>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+        <form method="post">
+            {% csrf_token %}
+            {{ wizard.management_form }}
+            {{ wizard.form.non_field_errors }}
+
+            {% if wizard.steps.current == 'generator' %}
+            <div class="mb-3">
+                <p class="text-center">Scan the QR code below with your authenticator app, or enter the key
+                    manually.</p>
+                <div class="text-center">
+                    <p><img src="{{ QR_URL }}" alt="QR Code" class="bg-white" /></p>
+                </div>
+                <div class="text-center">
+                    <p> Key: <a href="{{ otpauth_url }}">{{ secret_key }}</a></p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="mb-3 text-center">
+                {{ wizard.form.token.label_tag }}
+                {{ wizard.form.token }}
+                {% if wizard.form.token.errors %}
+                <div class="text-danger">{{ wizard.form.token.errors }}</div>
+                {% endif %}
+            </div>
+            <div class="btn-group d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">{% trans "Verify" %}</button>
+                <a href="{% url 'profile' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

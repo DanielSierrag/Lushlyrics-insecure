@@ -1,0 +1,36 @@
+{% extends "two_factor/_base.html" %}
+{% load i18n %}
+
+{% block title %}2FA activation complete{% endblock %}
+
+{% block content %}
+<div class="card mt-5 shadow-sm" style="max-width: 500px; margin: 0 auto;">
+    <div class="card-body text-center">
+        <h2 class="card-title mb-4 text-success">
+            <i class="fas fa-check-circle"></i>
+            {% trans "2FA Activated!" %}
+        </h2>
+        <p class="lead">
+            {% blocktrans trimmed %}Congratulations, you've successfully enabled two-factor authentication.{% endblocktrans %}
+        </p>
+
+        {% if not phone_methods %}
+            <a href="{% url 'profile' %}" class="btn btn-primary mt-4">
+                {% trans "Back to Account Security" %}
+            </a>
+        {% else %}
+            <div class="alert alert-info mt-4" role="alert">
+                {% blocktrans trimmed %}However, it might happen that you don't have access to your primary token device. To enable account recovery, add a phone number.{% endblocktrans %}
+            </div>
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'profile' %}" class="btn btn-outline-secondary">
+                    {% trans "Back to Account Security" %}
+                </a>
+                <a href="{% url 'two_factor:phone_create' %}" class="btn btn-success">
+                    {% trans "Add Phone Number" %}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
