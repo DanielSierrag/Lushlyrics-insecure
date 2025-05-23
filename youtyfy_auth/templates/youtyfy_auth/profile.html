@@ -13,7 +13,9 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Email:</label>
-                <span>{{ user.email }}</span>
+                <span>{{ user.email }} (change)</span>
+                <!-- <span>{{ user.email }} (<a href=""">change</a>)</span> -->
+                <!-- Future link to change email -->
             </div>
             <div class="mb-3">
                 <label class="form-label">Two-Factor Authentication:</label>
@@ -24,11 +26,23 @@
                 {% endif %}
             </div>
             {% if not request.user.is_verified %}
-            <a class="btn btn-primary" href="{% url 'two_factor:setup' %}">Enable 2FA</a>
+            <div class="btn-group d-flex justify-content-center">
+                {% if not user.has_usable_password %}
+                <a class="btn btn-outline-primary" href="{% url 'account_set_password' %}">Set a password</a>
+                {% else %}
+                <a class="btn btn-primary" href="{% url 'two_factor:setup' %}">Enable 2FA</a>
+                <a class="btn btn-outline-primary" href="{% url 'account_reset_password' %}">Reset password</a>
+                {% endif %}
+            </div>
             {% else %}
             <div class="btn-group d-flex justify-content-center">
-                <a class="col-3 btn btn-primary" href="{% url 'two_factor:disable' %}">Disable 2FA</a>
+                <a class="col-3 btn btn-danger" href="{% url 'two_factor:disable' %}">Disable 2FA</a>
                 <a class="col-3 btn btn-secondary" href="{% url 'two_factor:backup_tokens' %}">Back-up Tokens</a>
+                {% if not user.has_usable_password %}
+                <a class="btn btn-outline-primary" href="{% url 'account_set_password' %}">Set a password</a>
+                {% else %}
+                <a class="btn btn-outline-primary" href="{% url 'account_reset_password' %}">Reset password</a>
+                {% endif %}
             </div>
             {% endif %}
             <hr>

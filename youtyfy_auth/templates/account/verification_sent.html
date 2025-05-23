@@ -1,0 +1,24 @@
+{% extends "two_factor/_base.html" %}
+
+{% block title %}Verification Email Sent{% endblock title %}
+
+{% block content %}
+<div class="auth-container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="auth-card card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="auth-title mb-3 text-center">Verification Email Sent</h2>
+        <div class="alert alert-info text-center mb-4">
+            A verification email has been sent to your email address. Please check your inbox and follow the instructions to verify your account.
+        </div>
+        {% if request.user.is_anonymous %}
+        <div class="auth-links mt-4 text-center">
+            <a href="{% url 'two_factor:login' %}" class="btn btn-primary w-100 mb-2">Back to login</a>
+            <a href="{% url 'account_signup' %}" class="link-secondary">Sign up</a>
+        </div>
+        {% else %}
+        <div class="auth-links mt-4 text-center">
+            <a href="{% url 'profile' %}" class="btn btn-primary w-100 mb-2">Back to Profile</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

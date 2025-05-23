@@ -1,0 +1,32 @@
+{% extends "two_factor/_base.html" %}
+
+{% block title %}Confirm Your Email{% endblock title %}
+
+{% block content %}
+<div class="auth-container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="auth-card card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="auth-title mb-3 text-center">Confirm Your Email</h2>
+        <div class="alert alert-info text-center mb-4">
+            Please confirm your email address by clicking the link we sent to your inbox. If you have already confirmed, you can continue.
+        </div>
+        {% if confirmation %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success w-100 mb-2">Confirm Email</button>
+            </form>
+        {% else %}
+            <div class="alert alert-success text-center mb-4">
+                Your email has already been confirmed.
+            </div>
+        {% endif %}
+        <div class="auth-links mt-4 text-center">
+            {% if request.user.is_anonymous %}
+                <a href="{% url 'two_factor:login' %}" class="btn btn-primary w-100 mb-2">Back to login</a>
+                <a href="{% url 'account_signup' %}" class="link-secondary">Sign up</a>
+            {% else %}
+                <a href="{% url 'profile' %}" class="btn btn-primary w-100 mb-2">Back to Profile</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

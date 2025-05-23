@@ -1,0 +1,42 @@
+{% extends "two_factor/_base.html" %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<div class="card mx-auto mt-5 shadow-sm" style="max-width: 400px;">
+    <div class="card-header text-center">
+        <h2 class="mb-0">Sign Up</h2>
+    </div>
+    <div class="card-body">
+        <form method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+        </form>
+        <hr>
+        <a href="{% url 'google_login' %}" class="btn btn-outline-danger w-100 mb-2">
+            <i class="fa fa-google"></i> Sign up with Google
+        </a>
+        <div class="text-center mt-3">
+            <p class="mb-1">
+                Already have an account?
+                <a href="{% url 'two_factor:login' %}">Log in</a>
+            </p>
+            <p>
+                <a href="{% url 'account_reset_password' %}">Forgot password?</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
